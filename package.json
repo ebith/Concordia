@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "asar": "^0.14.0",
+    "fs-extra": "^5.0.0",
+    "mri": "^1.1.0"
+  },
+  "devDependencies": {
+    "chokidar-cli": "^1.2.0",
+    "xo": "^0.18.2"
+  },
+  "name": "discord-addons",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "ebith",
+  "license": "MIT",
+  "private": true,
+  "xo": {
+    "space": true,
+    "prettier": true
+  },
+  "scripts": {
+    "start": "node index.js",
+    "lint": "xo --fix index.js",
+    "watch-lint": "chokidar index.js -c 'yarn run lint'",
+    "watch-lint-run": "chokidar index.js -c 'yarn run lint ; node index.js'"
+  }
+}
