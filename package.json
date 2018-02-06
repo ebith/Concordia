@@ -8,8 +8,8 @@
     "chokidar-cli": "^1.2.0",
     "xo": "^0.18.2"
   },
-  "name": "discord-addons",
-  "version": "1.0.0",
+  "name": "Concordia",
+  "version": "0.2.0",
   "main": "index.js",
   "author": "ebith",
   "license": "MIT",

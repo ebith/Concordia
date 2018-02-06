@@ -1,6 +1,4 @@
 const fs = require('fs');
-const path = require('path');
-const os = require('os');
 const util = require('util');
 const args = require('mri')(process.argv.slice(2));
 const asar = require('asar');
@@ -10,19 +8,35 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
 (async () => {
-  const homeDir = os.homedir();
   const js = `mainWindow.webContents.on('dom-ready', () => {
     mainWindow.webContents.executeJavaScript(\`(() => {
       const fs = require('fs');
-      fs.readFile('${args.css || path.join(homeDir, '.discord.user.css')}', 'utf-8', (err, userCss) => {
-        const style = document.createElement('style');
-        style.innerHTML = userCss;
-        document.head.appendChild(style);
-      });
-      fs.readFile('${args.js || path.join(homeDir, '.discord-user.js')}', 'utf-8', (err, userJs) => {
-        const script = document.createElement('script');
-        script.innerHTML = userJs;
-        document.head.appendChild(script);
+      const os = require('os');
+      const path = require('path');
+
+      const homeDir = os.homedir();
+      const injectionDir = path.join(homeDir, 'Concordia');
+
+      const script = document.createElement('script');
+      script.innerHTML = 'let Concordia = { version: "0.2.0" };';
+      document.head.appendChild(script);
+
+      fs.readdir(injectionDir, (err, files) => {
+        for (const file of files) {
+          if (/\.js$/.test(file)) {
+            fs.readFile(path.join(injectionDir, file), 'utf-8', (err, userJs) => {
+              const script = document.createElement('script');
+              script.innerHTML = '(()=>{' + userJs + '})();';
+              document.head.appendChild(script);
+            });
+          } else if (/\.css$/.test(file)) {
+            fs.readFile(path.join(injectionDir, file), 'utf-8', (err, userCss) => {
+              const style = document.createElement('style');
+              style.innerHTML = userCss;
+              document.head.appendChild(style);
+            });
+          }
+        }
       });
     })();\`);
   });mainWindow.webContents.`;
