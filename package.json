@@ -16,12 +16,13 @@
   "private": true,
   "xo": {
     "space": true,
-    "prettier": true
+    "prettier": true,
+    "env": ["browser"]
   },
   "scripts": {
     "start": "node index.js",
-    "lint": "xo --fix index.js",
-    "watch-lint": "chokidar index.js -c 'yarn run lint'",
-    "watch-lint-run": "chokidar index.js -c 'yarn run lint ; node index.js'"
+    "lint": "xo --fix *.js",
+    "watch-lint": "chokidar *.js -c 'yarn run lint'",
+    "watch-lint-run": "chokidar *.js -c 'yarn run lint ; node index.js'"
   }
 }
