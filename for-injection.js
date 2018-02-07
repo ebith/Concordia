@@ -15,12 +15,14 @@
       if (/\.js$/.test(file)) {
         fs.readFile(path.join(injectionDir, file), 'utf-8', (err, userJs) => {
           const script = document.createElement('script');
+          script.id = file.split('.')[0];
           script.innerHTML = '(()=>{' + userJs + '})();';
           document.head.appendChild(script);
         });
       } else if (/\.css$/.test(file)) {
         fs.readFile(path.join(injectionDir, file), 'utf-8', (err, userCss) => {
           const style = document.createElement('style');
+          style.id = file.split('.')[0];
           style.innerHTML = userCss;
           document.head.appendChild(style);
         });
