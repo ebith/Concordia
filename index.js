@@ -28,7 +28,7 @@ const writeFile = util.promisify(fs.writeFile);
     console.log('Reverting from backup...');
   } else if (args.inject) {
     const target = await readFile(targetPath, 'utf-8');
-    if (target.includes(`mainWindow.webContents.on('dom-ready', () => {`)) {
+    if (target.includes('mainWindow.webContents.on(\'dom-ready\', () => {')) {
       console.log('Maybe already injected.');
     }
     const injected = target.replace('mainWindow.webContents.', js);
@@ -38,7 +38,7 @@ const writeFile = util.promisify(fs.writeFile);
     });
     console.log('Injecting...');
   } else {
-    console.log('Just extract core.asar and pack core.asar...');
+    console.log('Just extract core.asar and pack core.asar.');
   }
 
   asar.createPackage('tmp', 'core.asar', err => {
