@@ -6,8 +6,13 @@
   const homeDir = os.homedir();
   const injectionDir = path.join(homeDir, 'Concordia');
 
+  let settings = {};
+  try {
+    settings = require(path.join(injectionDir, 'settings.js'), 'utf-8');
+  } catch (err) {}
+  settings.version = '0.3.0';
   const script = document.createElement('script');
-  script.innerHTML = 'let Concordia = { version: "0.2.0" };';
+  script.innerHTML = 'let Concordia = ' + JSON.stringify(settings) + ';';
   document.head.appendChild(script);
 
   fs.readdir(injectionDir, (err, files) => {
