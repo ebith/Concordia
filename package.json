@@ -17,7 +17,8 @@
   "xo": {
     "space": true,
     "prettier": true,
-    "env": ["browser"]
+    "env": ["browser"],
+    "globals": ["Concordia"]
   },
   "scripts": {
     "start": "node index.js",
