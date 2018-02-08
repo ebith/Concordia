@@ -9,7 +9,9 @@ const writeFile = util.promisify(fs.writeFile);
 
 (async () => {
   const js = `mainWindow.webContents.on('dom-ready', () => {
-    mainWindow.webContents.executeJavaScript(\`${fs.readFileSync('for-injection.js')}\`);
+    setTimeout(() => {
+      mainWindow.webContents.executeJavaScript(\`${fs.readFileSync('for-injection.js')}\`);
+    }, 3000);
   });mainWindow.webContents.`;
 
   const corePath = args.core || 'core.asar';
